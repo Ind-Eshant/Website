@@ -7,7 +7,11 @@ import { Article } from "./article";
 import { Eye } from "lucide-react";
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+let redis: Redis | null = null;
+
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  redis = Redis.fromEnv();
+}
 
 export const revalidate = 60;
 
