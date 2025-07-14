@@ -34,4 +34,7 @@ This project is based on the incredible open-source work by chronark.
 Licensed under the MIT License.
 
 🔗 Live Site
-Coming Soon at eshant.termwave.in
+Coming Soon at eshant.termwave.in 
+
+(Based On Incredible Work Of Chronark)
+Licensed Under MIT License
