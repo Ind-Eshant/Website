@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 const redis = Redis.fromEnv();
 
 export async function GET(
-  request: Request,
+  _req: Request,
   { params }: { params: { slug: string } }
 ) {
   const slug = params.slug;
