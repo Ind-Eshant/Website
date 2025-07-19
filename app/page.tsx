@@ -1,53 +1,51 @@
-import { notFound } from "next/navigation";
-import { allProjects } from "contentlayer/generated";
-import { Mdx } from "@/app/components/mdx";
-import { Header } from "../../components/header";
-import "../../components/mdx.css";
-import { ReportView } from "../../components/view";
-import { Redis } from "@upstash/redis";
+// ✅ already correct code
+import Link from "next/link";
+import React from "react";
+import Particles from "./components/particles"; // ✅ this component exists
 
-export const revalidate = 60;
+const navigation = [
+  { name: "Projects", href: "/projects" },
+  { name: "Contact", href: "/contact" },
+];
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-// Delay Redis client creation until runtime and check env var
-let redis: Redis | null = null;
-if (process.env.REDIS_URL) {
-  redis = Redis.fromEnv();
-}
-
-export async function generateStaticParams(): Promise<Props["params"][]> {
-  return allProjects
-    .filter((p) => p.published)
-    .map((p) => ({
-      slug: p.slug,
-    }));
-}
-
-export default async function PostPage({ params }: Props) {
-  const slug = params?.slug;
-  const project = allProjects.find((project) => project.slug === slug);
-
-  if (!project) {
-    notFound();
-  }
-
-  // If you want to use redis, check redis is not null
-  // const views = redis ? await redis.get(`views:${slug}`) : 0;
-  // For now, you have views hardcoded, so you can keep it
-
+export default function Home() {
   return (
-    <div className="bg-zinc-50 min-h-screen">
-      <Header project={project} views={126} />
-      <ReportView slug={project.slug} />
-
-      <article className="px-4 py-12 mx-auto prose prose-zinc prose-quoteless">
-        <Mdx code={project.body.code} />
-      </article>
+    <div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+      <nav className="my-16 animate-fade-in">
+        <ul className="flex items-center justify-center gap-4">
+          {navigation.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm duration-500 text-zinc-500 hover:text-zinc-300"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </ul>
+      </nav>
+      <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <Particles
+        className="absolute inset-0 -z-10 animate-fade-in"
+        quantity={100}
+      />
+      <h1 className="py-3.5 px-0.5 z-10 text-4xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-9xl whitespace-nowrap bg-clip-text ">
+        Eshant
+      </h1>
+      <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="my-16 text-center animate-fade-in">
+        <h2 className="text-sm text-zinc-500 ">
+          I'm Good In{"Discord.py , Python Automation , Begineer Contributer In Js And Typescript Web Development and Cloud"}
+          <Link
+            target="_blank"
+            href="https://eshant.termwave.space"
+            className="underline duration-500 hover:text-zinc-300"
+          >
+            
+          </Link>{" "}
+         
+        </h2>
+      </div>
     </div>
   );
 }
